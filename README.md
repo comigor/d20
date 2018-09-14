@@ -1,4 +1,12 @@
-# D20 [![CircleCI](https://circleci.com/gh/Igor1201/d20/tree/master.svg?style=svg&circle-token=376c1d43be17c8602903dfc02368f711ea1a4ed6)](https://circleci.com/gh/Igor1201/d20/tree/master)
+<p align="center">
+  <img src="https://camo.githubusercontent.com/ea37eaceae12eedced315029af7a335d34b4a018/68747470733a2f2f63646e2e706978616261792e636f6d2f70686f746f2f323031322f30342f31382f31352f30312f6879706572637562652d33373237385f3936305f3732302e706e67" width="150">
+  <h1>D20</h1>
+</p>
+
+<!-- Badges -->
+
+[![Pub Package](https://img.shields.io/pub/v/d20.svg)](https://pub.dartlang.org/packages/d20)
+[![CircleCI](https://circleci.com/gh/Igor1201/d20/tree/master.svg?style=svg&circle-token=376c1d43be17c8602903dfc02368f711ea1a4ed6)](https://circleci.com/gh/Igor1201/d20/tree/master)
 
 D20 is a Dart library for RPG dice rolling. Supports standard notation (like "2d12", "d20+5" and "4d6*5").
 
@@ -23,9 +31,10 @@ flutter packages get
 import 'package:d20/d20.dart';
 
 void main() {
-  D20 d20 = D20();
+  final D20 d20 = D20();
   print(d20.roll('2d8+5+5d6'));
 }
+
 ```
 
 ## Supported notation
