@@ -52,12 +52,24 @@ jobs:
 
 workflows:
   version: 2
-  test-and-deploy:
+  keep-it-green:
     jobs:
       - deps
       - test:
           requires:
             - deps
+  test-and-deploy:
+    jobs:
+      - deps:
+          filters:
+            tags:
+              only: /^v.*/
+      - test:
+          requires:
+            - deps
+          filters:
+            tags:
+              only: /^v.*/
       - deploy:
           requires:
             - test
