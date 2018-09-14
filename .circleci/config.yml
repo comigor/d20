@@ -16,14 +16,14 @@ jobs:
         - save_cache:
             paths:
               - ~/.pub-cache
-            key: v1-pubcache-{{ checksum "pubspec.lock" }}
+            key: v1-pubcache-{{ checksum "pubspec.yaml" }}
 
   test:
     <<: *defaults
     steps:
         - checkout
         - restore_cache:
-            key: v1-pubcache-{{ checksum "pubspec.lock" }}
+            key: v1-pubcache-{{ checksum "pubspec.yaml" }}
         - run:
             name: Lint
             command: bash -c '[[ "$(dartfmt -n . | wc -l)" -eq "0" ]]'
@@ -36,7 +36,7 @@ jobs:
     steps:
         - checkout
         - restore_cache:
-            key: v1-pubcache-{{ checksum "pubspec.lock" }}
+            key: v1-pubcache-{{ checksum "pubspec.yaml" }}
         - run:
             name: Write credentials
             command: echo $CREDENTIALS > ~/.pub-cache/credentials.json
