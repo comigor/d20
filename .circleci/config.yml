@@ -26,7 +26,7 @@ jobs:
             key: v1-pubcache-{{ checksum "pubspec.lock" }}
         - run:
             name: Lint
-            command: [[ "$(dartfmt -n . | wc -l)" -eq "0" ]]
+            command: bash -c '[[ "$(dartfmt -n . | wc -l)" -eq "0" ]]'
         - run:
             name: Test
             command: pub run test
