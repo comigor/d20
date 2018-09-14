@@ -65,7 +65,9 @@ void main() {
     expect(die.roll('2d20-H'), 10);
   });
 
-  test('''subtracting the lowest or highest roll from any single die will always return 0''', () {
+  test(
+      '''subtracting the lowest or highest roll from any single die will always return 0''',
+      () {
     final D20 die = D20();
     expect(die.roll('d999-L'), 0);
     expect(die.roll('d999-H'), 0);

@@ -10,7 +10,7 @@ import 'dart:math';
 import 'package:math_expressions/math_expressions.dart';
 
 /// An expression-capable dice roller.
-/// 
+///
 /// Simple usage:
 /// ```
 ///   final D20 d20 = D20();
@@ -24,7 +24,7 @@ class D20 {
   Random _random;
 
   /// Creates a dice roller.
-  /// 
+  ///
   /// Optionally receives a [Random].
   D20({Random random}) {
     _random = random == null ? Random() : random;
@@ -33,11 +33,10 @@ class D20 {
   int _rollSingleDie(Match match) {
     final int numberOfRolls = match[1] == null ? 1 : int.parse(match[1]);
     final int dieSize = int.parse(match[2]);
-    final List<int> rolls =
-        List<int>.filled(numberOfRolls, dieSize)
+    final List<int> rolls = List<int>.filled(numberOfRolls, dieSize)
         .map((int die) => _random.nextInt(die) + 1)
         .toList();
-    
+
     final int minRoll = rolls.fold(dieSize, min);
     final int maxRoll = rolls.fold(0, max);
 
@@ -54,7 +53,7 @@ class D20 {
 
   /// Compute an arithmetic expression, computing rolls defined on standard
   /// notation format.
-  /// 
+  ///
   /// Example:
   /// ```
   ///   d20.roll('2d6+3');
@@ -67,12 +66,12 @@ class D20 {
         .toLowerCase()
         .replaceAll(RegExp(r'\s'), '')
         .replaceAll(RegExp(r'd%'), 'd100')
-        .replaceAllMapped(RegExp(r'(\d+)?d(\d+)(-[l|h])?'), (Match m) => _rollSingleDie(m).toString());
+        .replaceAllMapped(RegExp(r'(\d+)?d(\d+)(-[l|h])?'),
+            (Match m) => _rollSingleDie(m).toString());
 
-    final double exactResult = _parser
-        .parse(newRoll)
-        .evaluate(EvaluationType.REAL, _context);
-    
+    final double exactResult =
+        _parser.parse(newRoll).evaluate(EvaluationType.REAL, _context);
+
     return exactResult.round();
   }
 }
