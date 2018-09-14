@@ -43,3 +43,10 @@ void main() {
     D20 die2 = D20(random: Random(1));
     expect(die1.roll('d20'), isNot(die2.roll('d20')));
   });
+
+  test('L and H notation are currently not supported', () {
+    D20 die1 = D20(random: Random(0));
+    expect(() => die1.roll('d20-l'), throwsA(isStateError));
+    expect(() => die1.roll('d20-h'), throwsA(isStateError));
+  });
+}
