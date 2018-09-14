@@ -1,0 +1,60 @@
+version: 2
+
+jobs_defaults: &defaults
+  docker:
+    - image: google/dart
+  working_directory: ~/repo
+
+jobs:
+  deps:
+    <<: *defaults
+    steps:
+        - checkout
+        - run:
+            name: Download dependencies
+            command: pub get
+        - save_cache:
+            paths:
+              - ~/.pub-cache
+            key: v1-pubcache-{{ checksum "pubspec.lock" }}
+
+  test:
+    <<: *defaults
+    steps:
+        - checkout
+        - restore_cache:
+            key: v1-pubcache-{{ checksum "pubspec.lock" }}
+        - run:
+            name: Lint
+            command: [[ "$(dartfmt -n . | wc -l)" -eq "0" ]]
+        - run:
+            name: Test
+            command: pub run test
+
+  deploy:
+    <<: *defaults
+    steps:
+        - checkout
+        - restore_cache:
+            key: v1-pubcache-{{ checksum "pubspec.lock" }}
+        - run:
+            name: Write credentials
+            command: echo $CREDENTIALS > ~/.pub-cache/credentials.json
+        - run:
+            name: Deploy to pub.dartlang.org
+            command: pub publish
+
+workflows:
+  version: 2
+  test-and-deploy:
+    jobs:
+      - deps
+      - test:
+          requires:
+            - deps
+      - deploy:
+          requires:
+            - test
+          filters:
+            tags:
+              only: /^v.*/
