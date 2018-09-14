@@ -31,6 +31,9 @@ jobs:
             name: Lint
             command: bash -c '[[ "$(dartfmt -n . | wc -l)" -eq "0" ]]'
         - run:
+            name: Dartanalyze
+            command: dartanalyzer --fatal-infos --fatal-warnings .
+        - run:
             name: Test
             command: pub run test
 
