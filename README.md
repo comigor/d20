@@ -8,7 +8,7 @@
 [![Pub Package](https://img.shields.io/pub/v/d20.svg)](https://pub.dartlang.org/packages/d20)
 [![CircleCI](https://circleci.com/gh/Igor1201/d20/tree/master.svg?style=svg&circle-token=376c1d43be17c8602903dfc02368f711ea1a4ed6)](https://circleci.com/gh/Igor1201/d20/tree/master)
 
-D20 is a Dart library for RPG dice rolling. Supports standard notation (like "2d12", "d20+5" and "4d6*5").
+D20 is a Dart library for RPG dice rolling. Supports standard notation (like "2d12", "d6+5" and "2d20-L").
 
 ## Installation
 add the following to your `pubspec.yaml` file:
@@ -38,7 +38,10 @@ void main() {
 ```
 
 ## Supported notation
-The [standard dice notation](https://en.wikipedia.org/wiki/Dice_notation) will be parsed, such as 2d8+4. L and H notation are not supported yet.
+The [standard dice notation](https://en.wikipedia.org/wiki/Dice_notation) will be parsed, such as 2d8+4.
+
+### L and H subtraction
+When a `-L` or `-H` follows a roll, as in `2d20-L`, the lowest (or highest) roll of the sequence will be subtracted from the result.
 
 ### Operators
 You can also use mathematical operators, such as `1d6*3` or `10d4/d6`; or even `10 * sin(d20)`, though I'm not sure why you'd need that.

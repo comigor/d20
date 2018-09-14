@@ -30,15 +30,26 @@ class D20 {
     _random = random == null ? Random() : random;
   }
 
-  String _rollSingleDie(Match match) {
-    final Iterable<int> parts =
-        match.group(0).toString().split('d').map((String part) =>
-            part.trim().isEmpty ? 1 : int.parse(part)
-    );
+  int _rollSingleDie(Match match) {
+    final int numberOfRolls = match[1] == null ? 1 : int.parse(match[1]);
+    final int dieSize = int.parse(match[2]);
+    final List<int> rolls =
+        List<int>.filled(numberOfRolls, dieSize)
+        .map((int die) => _random.nextInt(die) + 1)
+        .toList();
+    
+    final int minRoll = rolls.fold(dieSize, min);
+    final int maxRoll = rolls.fold(0, max);
 
-    return List<int>.filled(parts.elementAt(0), parts.elementAt(1))
-        .fold(0, (int sum, int die) => sum + _random.nextInt(die) + 1)
-        .toString();
+    final int sum = rolls.fold(0, (int sum, int roll) => sum + roll);
+
+    if (match[3] == '-l') {
+      return sum - minRoll;
+    } else if (match[3] == '-h') {
+      return sum - maxRoll;
+    }
+
+    return sum;
   }
 
   /// Compute an arithmetic expression, computing rolls defined on standard
@@ -47,15 +58,16 @@ class D20 {
   /// Example:
   /// ```
   ///   d20.roll('2d6+3');
+  ///   d20.roll('2d20-L');
   ///   d20.roll('d% * 8');
   ///   d20.roll('cos(2 * 5d20)');
   /// ```
   int roll(String roll) {
     final String newRoll = roll
+        .toLowerCase()
         .replaceAll(RegExp(r'\s'), '')
         .replaceAll(RegExp(r'd%'), 'd100')
-        .toLowerCase()
-        .replaceAllMapped(RegExp(r'(\d+)?d\d+'), _rollSingleDie);
+        .replaceAllMapped(RegExp(r'(\d+)?d(\d+)(-[l|h])?'), (Match m) => _rollSingleDie(m).toString());
 
     final double exactResult = _parser
         .parse(newRoll)

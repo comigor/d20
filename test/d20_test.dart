@@ -49,15 +49,25 @@ void main() {
     expect(die1.roll('d20'), isNot(die2.roll('d20')));
   });
 
-  test('L and H notation are currently not supported', () {
-    final D20 die1 = D20(random: Random(0));
-    expect(() => die1.roll('d20-l'), throwsA(isStateError));
-    expect(() => die1.roll('d20-h'), throwsA(isStateError));
-  });
-
   test('d% is an alias for d100', () {
     final D20 die1 = D20(random: Random(0));
     final D20 die2 = D20(random: Random(0));
     expect(die1.roll('d%'), die2.roll('d100'));
+  });
+
+  test('"-L" notation subtracts lowest roll from result', () {
+    final D20 die = D20(random: Random(0));
+    expect(die.roll('2d20-L'), 16);
+  });
+
+  test('"-H" notation subtracts highest roll from result', () {
+    final D20 die = D20(random: Random(0));
+    expect(die.roll('2d20-H'), 10);
+  });
+
+  test('''subtracting the lowest or highest roll from any single die will always return 0''', () {
+    final D20 die = D20();
+    expect(die.roll('d999-L'), 0);
+    expect(die.roll('d999-H'), 0);
   });
 }
