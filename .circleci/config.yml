@@ -15,6 +15,7 @@ jobs:
             command: pub get
         - save_cache:
             paths:
+              - pubspec.lock
               - ~/.pub-cache
             key: v1-pubcache-{{ checksum "pubspec.yaml" }}
 
