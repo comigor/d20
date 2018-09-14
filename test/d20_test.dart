@@ -49,4 +49,10 @@ void main() {
     expect(() => die1.roll('d20-l'), throwsA(isStateError));
     expect(() => die1.roll('d20-h'), throwsA(isStateError));
   });
+
+  test('d% is an alias for d100', () {
+    D20 die1 = D20(random: Random(0));
+    D20 die2 = D20(random: Random(0));
+    expect(die1.roll('d%'), die2.roll('d100'));
+  });
 }

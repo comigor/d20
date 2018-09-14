@@ -24,6 +24,7 @@ class D20 {
   int roll(String roll) {
     String newRoll = roll
         .replaceAll(RegExp(r'\s'), '')
+        .replaceAll(RegExp(r'd%'), 'd100')
         .toLowerCase()
         .replaceAllMapped(RegExp(r'(\d+)?d\d+'), _rollSingleDie);
 

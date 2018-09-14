@@ -33,3 +33,6 @@ The [standard dice notation](https://en.wikipedia.org/wiki/Dice_notation) will b
 
 ### Operators
 You can also use mathematical operators, such as `1d6*3` or `10d4/d6`; or even `10 * sin(d20)`, though I'm not sure why you'd need that.
+
+### Percentile dice (d%)
+You can also use use the `d%` notation instead of `d100`.
