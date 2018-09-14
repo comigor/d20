@@ -28,6 +28,11 @@ void main() {
     expect(die.roll('d6       +         d4'), 6);
   });
 
+  test('we ignore casing', () {
+    final D20 die = D20(random: Random(0));
+    expect(die.roll('D4'), 4);
+  });
+
   test('whitespace between "d" work as well, but who would do that?', () {
     final D20 die = D20(random: Random(0));
     expect(die.roll('d 20'), 16);
