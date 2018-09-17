@@ -37,15 +37,12 @@ class D20 {
         .map((int die) => _random.nextInt(die) + 1)
         .toList();
 
-    final int minRoll = rolls.fold(dieSize, min);
-    final int maxRoll = rolls.fold(0, max);
-
     final int sum = rolls.fold(0, (int sum, int roll) => sum + roll);
 
     if (match[3] == '-l') {
-      return sum - minRoll;
+      return sum - rolls.fold(dieSize, min);
     } else if (match[3] == '-h') {
-      return sum - maxRoll;
+      return sum - rolls.fold(0, max);
     }
 
     return sum;
