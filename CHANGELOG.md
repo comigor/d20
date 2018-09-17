@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 0.2.0
+- Add `rollWithStatistics` to `D20`, with (probably) useful information of roll results.
+
 ## 0.1.1
 - Obvious conditional optimization.
 
