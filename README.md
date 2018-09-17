@@ -37,6 +37,21 @@ void main() {
 
 ```
 
+One can also get (probably) useful information of roll results:
+```dart
+import 'package:d20/d20.dart';
+import 'package:d20/roll_statistics.dart';
+
+void main() {
+  final D20 d20 = D20();
+  final RollStatistics stats = d20.rollWithStatistics('2d8+5+5d6');
+  print(stats.results[0].faces);
+  print(stats.results[1].results);
+}
+
+```
+
+
 ## Supported notation
 The [standard dice notation](https://en.wikipedia.org/wiki/Dice_notation) will be parsed, such as 2d8+4.
 
