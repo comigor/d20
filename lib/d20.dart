@@ -8,6 +8,8 @@
 
 import 'dart:math';
 import 'package:math_expressions/math_expressions.dart';
+import 'roll_result.dart';
+import 'roll_statistics.dart';
 
 /// An expression-capable dice roller.
 ///
@@ -16,6 +18,8 @@ import 'package:math_expressions/math_expressions.dart';
 ///   final D20 d20 = D20();
 ///   d20.roll('2d6+3');
 /// ```
+///
+/// See also [rollWithStatistics], [RollStatistics] and [RollResult].
 class D20 {
   final Parser _parser = Parser();
   final ContextModel _context = ContextModel();
@@ -59,6 +63,34 @@ class D20 {
       .replaceAll(RegExp(r'\s'), '')
       .replaceAll(RegExp(r'd%'), 'd100');
 
+  /// Compute and return a [RollStatistics] with all information from a roll,
+  /// including the result from each individual dice roll within.
+  ///
+  /// See [RollStatistics] and [RollResult] for more info.
+  RollStatistics rollWithStatistics(String roll) {
+    final String sanitizedRoll = _sanitizeStringNotation(roll);
+
+    final Iterable<Match> matches =
+        RegExp(r'(\d+)?d(\d+)(-[l|h])?').allMatches(sanitizedRoll);
+
+    String newRoll = sanitizedRoll;
+    final List<RollResult> results = <RollResult>[];
+
+    for (int i = matches.length - 1; i >= 0; i--) {
+      final RollResult result = _rollSingleDie(matches.elementAt(i));
+      results.add(result);
+      newRoll = newRoll.replaceRange(matches.elementAt(i).start,
+          matches.elementAt(i).end, result.finalResult.toString());
+    }
+
+    final double exactResult =
+        _parser.parse(newRoll).evaluate(EvaluationType.REAL, _context);
+
+    return RollStatistics(
+      rollNotation: sanitizedRoll,
+      results: results,
+      finalResult: exactResult.round(),
+    );
   }
 
   /// Compute an arithmetic expression from a roll defined on standard notation

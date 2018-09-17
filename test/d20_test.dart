@@ -1,5 +1,6 @@
 import 'dart:math';
 import 'package:d20/d20.dart';
+import 'package:d20/roll_statistics.dart';
 import 'package:test/test.dart';
 
 void main() {
@@ -75,5 +76,38 @@ void main() {
     });
   });
 
+  group('on D20.rollWithStatistics', () {
+    test('it sanitizes roll notation', () {
+      final D20 die = D20();
+      final RollStatistics statistics =
+          die.rollWithStatistics('3 d 20 + 8D    6 +  10 *2 - d% + 2  D20- L');
+      expect(statistics.rollNotation, '3d20+8d6+10*2-d100+2d20-l');
+    });
+
+    test('rolls are computed from last to first (for optimization)', () {
+      final D20 die = D20();
+      final RollStatistics statistics = die.rollWithStatistics('d8 + d100');
+      expect(statistics.results[0].faces, 100);
+      expect(statistics.results[1].faces, 8);
+    });
+
+    test('it has the correct amount of rolls and rolls within', () {
+      final D20 die = D20();
+      final RollStatistics statistics = die.rollWithStatistics('2d20-L + 6d6');
+      expect(statistics.results.length, 2);
+      expect(statistics.results[0].results.length, 6);
+      expect(statistics.results[1].results.length, 2);
+    });
+
+    test('it correctly parses a single result', () {
+      final D20 die = D20(random: Random(0));
+      final RollStatistics statistics =
+          die.rollWithStatistics('1d1 + 7d6-L + 1d1');
+      expect(statistics.results[1].faces, 6);
+      expect(statistics.results[1].numberOfRolls, 7);
+      expect(statistics.results[1].rollNotation, '7d6-l');
+      expect(statistics.results[1].results, <int>[6, 5, 2, 1, 4, 3, 2]);
+      expect(statistics.results[1].finalResult, 22);
+    });
   });
 }
