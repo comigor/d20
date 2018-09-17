@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 0.1.1
+- Obvious conditional optimization.
+
 ## 0.1.0
 - Add support to `-L`/`-H` subtractions.
 
