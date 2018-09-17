@@ -30,26 +30,39 @@ class D20 {
     _random = random == null ? Random() : random;
   }
 
-  int _rollSingleDie(Match match) {
+  RollResult _rollSingleDie(Match match) {
     final int numberOfRolls = match[1] == null ? 1 : int.parse(match[1]);
-    final int dieSize = int.parse(match[2]);
-    final List<int> rolls = List<int>.filled(numberOfRolls, dieSize)
+    final int faces = int.parse(match[2]);
+    final List<int> results = List<int>.filled(numberOfRolls, faces)
         .map((int die) => _random.nextInt(die) + 1)
         .toList();
 
-    final int sum = rolls.fold(0, (int sum, int roll) => sum + roll);
+    int sum = results.fold(0, (int sum, int roll) => sum + roll);
 
     if (match[3] == '-l') {
-      return sum - rolls.fold(dieSize, min);
+      sum -= results.fold(faces, min);
     } else if (match[3] == '-h') {
-      return sum - rolls.fold(0, max);
+      sum -= results.fold(0, max);
     }
 
-    return sum;
+    return RollResult(
+      rollNotation: match[0],
+      faces: faces,
+      numberOfRolls: numberOfRolls,
+      results: results,
+      finalResult: sum,
+    );
   }
 
-  /// Compute an arithmetic expression, computing rolls defined on standard
-  /// notation format.
+  String _sanitizeStringNotation(String dirty) => dirty
+      .toLowerCase()
+      .replaceAll(RegExp(r'\s'), '')
+      .replaceAll(RegExp(r'd%'), 'd100');
+
+  }
+
+  /// Compute an arithmetic expression from a roll defined on standard notation
+  /// format.
   ///
   /// Example:
   /// ```
@@ -59,12 +72,9 @@ class D20 {
   ///   d20.roll('cos(2 * 5d20)');
   /// ```
   int roll(String roll) {
-    final String newRoll = roll
-        .toLowerCase()
-        .replaceAll(RegExp(r'\s'), '')
-        .replaceAll(RegExp(r'd%'), 'd100')
-        .replaceAllMapped(RegExp(r'(\d+)?d(\d+)(-[l|h])?'),
-            (Match m) => _rollSingleDie(m).toString());
+    final String newRoll = _sanitizeStringNotation(roll).replaceAllMapped(
+        RegExp(r'(\d+)?d(\d+)(-[l|h])?'),
+        (Match m) => _rollSingleDie(m).finalResult.toString());
 
     final double exactResult =
         _parser.parse(newRoll).evaluate(EvaluationType.REAL, _context);
