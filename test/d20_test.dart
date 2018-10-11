@@ -5,17 +5,17 @@ import 'package:test/test.dart';
 
 void main() {
   group('on D20.roll', () {
-    test('we can roll a single die', () {
+    test('we can roll a single dice', () {
       final D20 die = D20(random: Random(0));
       expect(die.roll('d20'), 16);
     });
 
-    test('we can roll a die multiple times', () {
+    test('we can roll a dice multiple times', () {
       final D20 die = D20(random: Random(0));
       expect(die.roll('2d20'), 26);
     });
 
-    test('we can roll a die and sum an amount', () {
+    test('we can roll a dice and sum an amount', () {
       final D20 die = D20(random: Random(0));
       expect(die.roll('1d20+4'), 20);
     });
