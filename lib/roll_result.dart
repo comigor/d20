@@ -1,5 +1,14 @@
 /// A result from a single roll with a particular die.
 class RollResult {
+  /// Instantiate the result of a single roll.
+  RollResult({
+    this.rollNotation,
+    this.faces,
+    this.numberOfRolls,
+    this.results,
+    this.finalResult,
+  });
+
   /// The string notation from this particular roll.
   String rollNotation;
 
@@ -14,13 +23,4 @@ class RollResult {
 
   /// The final result from this roll (considering multiple throws and L/H notation).
   int finalResult;
-
-  /// Instantiate the result of a single roll.
-  RollResult({
-    this.rollNotation,
-    this.faces,
-    this.numberOfRolls,
-    this.results,
-    this.finalResult,
-  });
 }

@@ -2,6 +2,13 @@ import 'roll_result.dart';
 
 /// An aggregator of valuable information from a roll.
 class RollStatistics {
+  /// Instantiate the statistics of a roll.
+  RollStatistics({
+    this.rollNotation,
+    this.results,
+    this.finalResult,
+  });
+
   /// The sanitized string notation from the roll.
   String rollNotation;
 
@@ -10,11 +17,4 @@ class RollStatistics {
 
   /// The final result from the roll.
   int finalResult;
-
-  /// Instantiate the statistics of a roll.
-  RollStatistics({
-    this.rollNotation,
-    this.results,
-    this.finalResult,
-  });
 }

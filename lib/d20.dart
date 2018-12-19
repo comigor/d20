@@ -21,18 +21,18 @@ import 'roll_statistics.dart';
 ///
 /// See also [rollWithStatistics], [RollStatistics] and [RollResult].
 class D20 {
-  final Parser _parser = Parser();
-  final ContextModel _context = ContextModel();
-
-  /// A [Random] instance that can be customized for seeding.
-  Random _random;
-
   /// Creates a dice roller.
   ///
   /// Optionally receives a [Random].
   D20({Random random}) {
     _random = random == null ? Random() : random;
   }
+
+  final Parser _parser = Parser();
+  final ContextModel _context = ContextModel();
+
+  /// A [Random] instance that can be customized for seeding.
+  Random _random;
 
   RollResult _rollSingleDie(Match match) {
     final int numberOfRolls = match[1] == null ? 1 : int.parse(match[1]);
