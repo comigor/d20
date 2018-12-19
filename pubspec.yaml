@@ -1,5 +1,5 @@
 name: d20
-version: 0.2.0
+version: 0.2.0+test-github-actions-1
 authors:
 - Igor Borges <igor@borges.me>
 description: >
