@@ -4,17 +4,17 @@ import 'roll_result.dart';
 class RollStatistics {
   /// Instantiate the statistics of a roll.
   RollStatistics({
-    this.rollNotation,
-    this.results,
-    this.finalResult,
+    required this.rollNotation,
+    required this.results,
+    required this.finalResult,
   });
 
   /// The sanitized string notation from the roll.
-  String? rollNotation;
+  String rollNotation;
 
   /// A list of [RollResult] from the roll.
-  List<RollResult>? results;
+  List<RollResult> results;
 
   /// The final result from the roll.
-  int? finalResult;
+  int finalResult;
 }

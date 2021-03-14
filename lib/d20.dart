@@ -11,6 +11,8 @@ import 'package:math_expressions/math_expressions.dart';
 import 'roll_result.dart';
 import 'roll_statistics.dart';
 
+final RegExp _singleDiceRegExp = RegExp(r'(\d+)?d(\d+)(-[l|h])?');
+
 /// An expression-capable dice roller.
 ///
 /// Simple usage:
@@ -35,22 +37,24 @@ class D20 {
   late Random _random;
 
   RollResult _rollSingleDie(Match match) {
+    final String notation = match[0]!;
     final int numberOfRolls = match[1] == null ? 1 : int.parse(match[1]!);
     final int faces = int.parse(match[2]!);
     final List<int> results = List<int>.filled(numberOfRolls, faces)
         .map((int die) => _random.nextInt(die) + 1)
         .toList();
+    final String? lowestHighest = match[3];
 
     int sum = results.fold(0, (int sum, int roll) => sum + roll);
 
-    if (match[3] == '-l') {
+    if (lowestHighest == '-l') {
       sum -= results.fold<int>(faces, min);
-    } else if (match[3] == '-h') {
+    } else if (lowestHighest == '-h') {
       sum -= results.fold<int>(0, max);
     }
 
     return RollResult(
-      rollNotation: match[0],
+      rollNotation: notation,
       faces: faces,
       numberOfRolls: numberOfRolls,
       results: results,
@@ -70,8 +74,7 @@ class D20 {
   RollStatistics rollWithStatistics(String roll) {
     final String sanitizedRoll = _sanitizeStringNotation(roll);
 
-    final Iterable<Match> matches =
-        RegExp(r'(\d+)?d(\d+)(-[l|h])?').allMatches(sanitizedRoll);
+    final Iterable<Match> matches = _singleDiceRegExp.allMatches(sanitizedRoll);
 
     String newRoll = sanitizedRoll;
     final List<RollResult> results = <RollResult>[];
@@ -79,8 +82,11 @@ class D20 {
     for (int i = matches.length - 1; i >= 0; i--) {
       final RollResult result = _rollSingleDie(matches.elementAt(i));
       results.add(result);
-      newRoll = newRoll.replaceRange(matches.elementAt(i).start,
-          matches.elementAt(i).end, result.finalResult.toString());
+      newRoll = newRoll.replaceRange(
+        matches.elementAt(i).start,
+        matches.elementAt(i).end,
+        result.finalResult.toString(),
+      );
     }
 
     final double exactResult = _parser
@@ -107,8 +113,9 @@ class D20 {
   /// ```
   int roll(String roll) {
     final String newRoll = _sanitizeStringNotation(roll).replaceAllMapped(
-        RegExp(r'(\d+)?d(\d+)(-[l|h])?'),
-        (Match m) => _rollSingleDie(m).finalResult.toString());
+      _singleDiceRegExp,
+      (Match m) => _rollSingleDie(m).finalResult.toString(),
+    );
 
     final double exactResult = _parser
         .parse(newRoll)
