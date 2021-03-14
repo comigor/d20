@@ -24,7 +24,7 @@ class D20 {
   /// Creates a dice roller.
   ///
   /// Optionally receives a [Random].
-  D20({Random random}) {
+  D20({Random? random}) {
     _random = random == null ? Random() : random;
   }
 
@@ -32,11 +32,11 @@ class D20 {
   final ContextModel _context = ContextModel();
 
   /// A [Random] instance that can be customized for seeding.
-  Random _random;
+  late Random _random;
 
   RollResult _rollSingleDie(Match match) {
-    final int numberOfRolls = match[1] == null ? 1 : int.parse(match[1]);
-    final int faces = int.parse(match[2]);
+    final int numberOfRolls = match[1] == null ? 1 : int.parse(match[1]!);
+    final int faces = int.parse(match[2]!);
     final List<int> results = List<int>.filled(numberOfRolls, faces)
         .map((int die) => _random.nextInt(die) + 1)
         .toList();
@@ -44,9 +44,9 @@ class D20 {
     int sum = results.fold(0, (int sum, int roll) => sum + roll);
 
     if (match[3] == '-l') {
-      sum -= results.fold(faces, min);
+      sum -= results.fold<int>(faces, min);
     } else if (match[3] == '-h') {
-      sum -= results.fold(0, max);
+      sum -= results.fold<int>(0, max);
     }
 
     return RollResult(
@@ -83,8 +83,10 @@ class D20 {
           matches.elementAt(i).end, result.finalResult.toString());
     }
 
-    final double exactResult =
-        _parser.parse(newRoll).evaluate(EvaluationType.REAL, _context);
+    final double exactResult = _parser
+        .parse(newRoll)
+        // ignore: avoid_as
+        .evaluate(EvaluationType.REAL, _context) as double;
 
     return RollStatistics(
       rollNotation: sanitizedRoll,
@@ -108,8 +110,10 @@ class D20 {
         RegExp(r'(\d+)?d(\d+)(-[l|h])?'),
         (Match m) => _rollSingleDie(m).finalResult.toString());
 
-    final double exactResult =
-        _parser.parse(newRoll).evaluate(EvaluationType.REAL, _context);
+    final double exactResult = _parser
+        .parse(newRoll)
+        // ignore: avoid_as
+        .evaluate(EvaluationType.REAL, _context) as double;
 
     return exactResult.round();
   }
