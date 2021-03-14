@@ -1,0 +1,20 @@
+on: pull_request
+
+name: CI
+
+jobs:
+  check-version-and-changelog:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+      - uses: comigor/actions/check-version-and-changelog@master
+        with:
+          repo_token: "${{ secrets.GITHUB_TOKEN }}"
+          base_ref: "${{ github.base_ref }}"
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+      - uses: comigor/actions/dart-test@master
+        with:
+          exclude_regex: "example"
