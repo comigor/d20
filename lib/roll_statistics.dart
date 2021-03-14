@@ -10,11 +10,11 @@ class RollStatistics {
   });
 
   /// The sanitized string notation from the roll.
-  String rollNotation;
+  String? rollNotation;
 
   /// A list of [RollResult] from the roll.
-  List<RollResult> results;
+  List<RollResult>? results;
 
   /// The final result from the roll.
-  int finalResult;
+  int? finalResult;
 }

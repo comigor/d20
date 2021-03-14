@@ -7,10 +7,10 @@ description: >
 homepage: https://github.com/Igor1201/d20
 
 environment:
-  sdk: '>=2.0.0 <3.0.0'
+  sdk: '>=2.12.0 <3.0.0'
 
 dependencies:
-  math_expressions: ^1.0.0
+  math_expressions: ^2.1.0-nullsafety.0 
 
 dev_dependencies:
   test: ^1.5.1+1
