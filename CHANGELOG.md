@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 0.2.0-nullsafety.0
+- Migrate to nullsafety.
+
 ## 0.2.0-1
 - Add codespaces configuration and GitHub Actions workflows.
 
