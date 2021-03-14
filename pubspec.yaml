@@ -1,13 +1,13 @@
 name: d20
-version: 0.2.0+test-github-actions-1
+version: 0.2.0-1
 authors:
-- Igor Borges <igor@borges.me>
+  - Igor Borges <igor@borges.me>
 description: >
   D20 is a Dart library for RPG dice rolling. Supports standard notation (like "2d12", "d6+5" and "2d20-L").
 homepage: https://github.com/Igor1201/d20
 
 environment:
-  sdk: '>=2.0.0 <3.0.0'
+  sdk: ">=2.0.0 <3.0.0"
 
 dependencies:
   math_expressions: ^1.0.0

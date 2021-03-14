@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 0.2.0-1
+- Add codespaces configuration and GitHub Actions workflows.
+
 ## 0.2.0
 - Add `rollWithStatistics` to `D20`, with (probably) useful information of roll results.
 
