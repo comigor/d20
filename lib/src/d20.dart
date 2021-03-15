@@ -27,7 +27,7 @@ class D20 {
   ///
   /// Optionally receives a [Random].
   D20({Random? random}) {
-    _random = random == null ? Random() : random;
+    _random = random ?? Random();
   }
 
   final Parser _parser = Parser();
@@ -37,15 +37,15 @@ class D20 {
   late Random _random;
 
   RollResult _rollSingleDie(Match match) {
-    final String notation = match[0]!;
-    final int numberOfRolls = match[1] == null ? 1 : int.parse(match[1]!);
-    final int faces = int.parse(match[2]!);
-    final List<int> results = List<int>.filled(numberOfRolls, faces)
+    final notation = match[0]!;
+    final numberOfRolls = match[1] == null ? 1 : int.parse(match[1]!);
+    final faces = int.parse(match[2]!);
+    final results = List<int>.filled(numberOfRolls, faces)
         .map((int die) => _random.nextInt(die) + 1)
         .toList();
-    final String? lowestHighest = match[3];
+    final lowestHighest = match[3];
 
-    int sum = results.fold(0, (int sum, int roll) => sum + roll);
+    var sum = results.fold(0, (int sum, int roll) => sum + roll);
 
     if (lowestHighest == '-l') {
       sum -= results.fold<int>(faces, min);
@@ -72,15 +72,15 @@ class D20 {
   ///
   /// See [RollStatistics] and [RollResult] for more info.
   RollStatistics rollWithStatistics(String roll) {
-    final String sanitizedRoll = _sanitizeStringNotation(roll);
+    final sanitizedRoll = _sanitizeStringNotation(roll);
 
     final Iterable<Match> matches = _singleDiceRegExp.allMatches(sanitizedRoll);
 
-    String newRoll = sanitizedRoll;
-    final List<RollResult> results = <RollResult>[];
+    var newRoll = sanitizedRoll;
+    final results = <RollResult>[];
 
-    for (int i = matches.length - 1; i >= 0; i--) {
-      final RollResult result = _rollSingleDie(matches.elementAt(i));
+    for (var i = matches.length - 1; i >= 0; i--) {
+      final result = _rollSingleDie(matches.elementAt(i));
       results.add(result);
       newRoll = newRoll.replaceRange(
         matches.elementAt(i).start,
@@ -89,7 +89,7 @@ class D20 {
       );
     }
 
-    final double exactResult = _parser
+    final exactResult = _parser
         .parse(newRoll)
         // ignore: avoid_as
         .evaluate(EvaluationType.REAL, _context) as double;
@@ -112,12 +112,12 @@ class D20 {
   ///   d20.roll('cos(2 * 5d20)');
   /// ```
   int roll(String roll) {
-    final String newRoll = _sanitizeStringNotation(roll).replaceAllMapped(
+    final newRoll = _sanitizeStringNotation(roll).replaceAllMapped(
       _singleDiceRegExp,
       (Match m) => _rollSingleDie(m).finalResult.toString(),
     );
 
-    final double exactResult = _parser
+    final exactResult = _parser
         .parse(newRoll)
         // ignore: avoid_as
         .evaluate(EvaluationType.REAL, _context) as double;
