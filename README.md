@@ -49,7 +49,7 @@ flutter packages get
 import 'package:d20/d20.dart';
 
 void main() {
-  final D20 d20 = D20();
+  final d20 = D20();
   print(d20.roll('2d8+5+5d6'));
 }
 
@@ -60,8 +60,8 @@ One can also get (probably) useful information of roll results:
 import 'package:d20/d20.dart';
 
 void main() {
-  final D20 d20 = D20();
-  final RollStatistics stats = d20.rollWithStatistics('2d8+5+5d6');
+  final d20 = D20();
+  final stats = d20.rollWithStatistics('2d8+5+5d6');
   print(stats.results[0].faces);
   print(stats.results[1].results);
 }
