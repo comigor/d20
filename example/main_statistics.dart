@@ -1,5 +1,4 @@
 import 'package:d20/d20.dart';
-import 'package:d20/roll_statistics.dart';
 
 void main() {
   final D20 d20 = D20();

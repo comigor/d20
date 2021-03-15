@@ -1,6 +1,5 @@
 import 'dart:math';
 import 'package:d20/d20.dart';
-import 'package:d20/roll_statistics.dart';
 import 'package:test/test.dart';
 
 void main() {
