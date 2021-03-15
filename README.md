@@ -4,15 +4,33 @@
 </p>
 
 <!-- Badges -->
+[![View at pub.dev][pub-badge]][pub-link]
+[![Test][actions-badge]][actions-link]
+[![PRs Welcome][prs-badge]][prs-link]
+[![Star on GitHub][github-star-badge]][github-star-link]
+[![Fork on GitHub][github-forks-badge]][github-forks-link]
 
-[![Pub Package](https://img.shields.io/pub/v/d20.svg)](https://pub.dartlang.org/packages/d20)
-[![CircleCI](https://circleci.com/gh/Igor1201/d20/tree/master.svg?style=svg&circle-token=376c1d43be17c8602903dfc02368f711ea1a4ed6)](https://circleci.com/gh/Igor1201/d20/tree/master)
+[pub-badge]: https://img.shields.io/pub/v/d20?style=for-the-badge
+[pub-link]: https://pub.dev/packages/d20
+
+[actions-badge]: https://img.shields.io/github/workflow/status/comigor/d20/CI?style=for-the-badge
+[actions-link]: https://github.com/comigor/d20/actions
+
+[prs-badge]: https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=for-the-badge
+[prs-link]: https://github.com/comigor/d20/issues
+
+[github-star-badge]: https://img.shields.io/github/stars/comigor/d20.svg?style=for-the-badge&logo=github&logoColor=ffffff
+[github-star-link]: https://github.com/comigor/d20/stargazers
+
+[github-forks-badge]: https://img.shields.io/github/forks/comigor/d20.svg?style=for-the-badge&logo=github&logoColor=ffffff
+[github-forks-link]: https://github.com/comigor/d20/network/members
 
 D20 is a Dart library for RPG dice rolling. Supports standard notation (like "2d12", "d6+5" and "2d20-L").
 
 ## Installation
-add the following to your `pubspec.yaml` file:
-```shell
+
+Add the following to your `pubspec.yaml` file:
+```yaml
 dependencies:
   d20: <1.0.0
 ```
@@ -31,7 +49,7 @@ flutter packages get
 import 'package:d20/d20.dart';
 
 void main() {
-  final D20 d20 = D20();
+  final d20 = D20();
   print(d20.roll('2d8+5+5d6'));
 }
 
@@ -40,17 +58,15 @@ void main() {
 One can also get (probably) useful information of roll results:
 ```dart
 import 'package:d20/d20.dart';
-import 'package:d20/roll_statistics.dart';
 
 void main() {
-  final D20 d20 = D20();
-  final RollStatistics stats = d20.rollWithStatistics('2d8+5+5d6');
+  final d20 = D20();
+  final stats = d20.rollWithStatistics('2d8+5+5d6');
   print(stats.results[0].faces);
   print(stats.results[1].results);
 }
 
 ```
-
 
 ## Supported notation
 The [standard dice notation](https://en.wikipedia.org/wiki/Dice_notation) will be parsed, such as 2d8+4.
