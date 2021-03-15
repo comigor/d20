@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 0.3.0
+- Make some results fields non-nullable, 💅 to analysis_options.
+
 ## 0.2.0-nullsafety.0
 - Migrate to nullsafety.
 
