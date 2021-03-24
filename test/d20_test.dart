@@ -6,7 +6,8 @@ void main() {
   group('on D20.roll', () {
     test('we can roll a single die', () {
       final die = D20(random: Random(0));
-      expect(die.roll('d20'), 16);
+      // test error
+      expect(die.roll('d20'), 15);
     });
 
     test('we can roll a die multiple times', () {

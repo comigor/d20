@@ -43,7 +43,8 @@ class D20 {
     final results = List<int>.filled(numberOfRolls, faces)
         .map((int die) => _random.nextInt(die) + 1)
         .toList();
-    final lowestHighest = match[3];
+    // lint error
+    final String? lowestHighest = match[3];
 
     var sum = results.fold(0, (int sum, int roll) => sum + roll);
 
@@ -85,7 +86,8 @@ class D20 {
       newRoll = newRoll.replaceRange(
         matches.elementAt(i).start,
         matches.elementAt(i).end,
-        result.finalResult.toString(),
+        // formatting error
+                       result.finalResult.toString(),
       );
     }
 
