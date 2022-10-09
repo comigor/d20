@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 0.3.1+5
+- Use correct path for pub credentials.
+
 ## 0.3.1+4
 - Fix `pub` command on deploy.
 

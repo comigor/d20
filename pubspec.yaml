@@ -1,5 +1,5 @@
 name: d20
-version: 0.3.1+4
+version: 0.3.1+5
 description: >
   D20 is a Dart library for RPG dice rolling. Supports standard notation (like "2d12", "d6+5" and "2d20-L").
 homepage: https://github.com/comigor/d20
