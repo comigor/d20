@@ -1,6 +1,5 @@
-# https://www.dartlang.org/guides/language/analysis-options
-
-include: package:pedantic/analysis_options.yaml
+# https://github.com/dart-lang/lints#migrating-from-packagepedantic
+include: package:lints/recommended.yaml
 
 analyzer:
   strong-mode:
