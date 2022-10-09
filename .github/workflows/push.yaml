@@ -78,9 +78,13 @@ jobs:
     if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/beta'
     steps:
       - uses: actions/checkout@master
-      - name: Publish to pub.dev
-        uses: comigor/actions/pub-publish@master
-        env:
-          PUB_CREDENTIALS: ${{ secrets.PUB_CREDENTIALS }}
+      - uses: dart-lang/setup-dart@v1.3
         with:
-          pub_credentials: ${{ secrets.PUB_CREDENTIALS }}
+          sdk: stable
+      - id: install
+        name: Install dependencies
+        run: dart pub get
+      - name: Publish to pub.dev
+        run: |
+          echo "${{ secrets.PUB_CREDENTIALS }}" > ~/.pub-cache/credentials.json
+          echo y | pub publish
