@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 0.3.1+3
+- Avoid using outdated action.
+
 ## 0.3.1+2
 - Bump dependencies.
 
