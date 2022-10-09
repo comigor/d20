@@ -18,11 +18,6 @@
 	// Add the IDs of extensions you want installed when the container is created.
 	"extensions": [
 		"dart-code.dart-code",
-		"dart-code.flutter",
-		"redhat.vscode-yaml",
-		"luanpotter.dart-import",
-		"jeroen-meijer.pubspec-assist",
-		"kumar-harsh.graphql-for-vscode",
 	],
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
 	// "forwardPorts": [],
