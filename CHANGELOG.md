@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 0.3.1+1
+- Update devcontainer.
+
 ## 0.3.1
 - Fix pipeline.
 
