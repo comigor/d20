@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 0.3.1+4
+- Fix `pub` command on deploy.
+
 ## 0.3.1+3
 - Avoid using outdated action.
 
