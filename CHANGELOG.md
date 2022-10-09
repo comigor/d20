@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 0.3.1
+- Fix pipeline.
+
 ## 0.3.0
 - Make some results fields non-nullable, 💅 to analysis_options.
 
