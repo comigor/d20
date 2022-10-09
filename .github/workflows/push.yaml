@@ -86,5 +86,5 @@ jobs:
         run: dart pub get
       - name: Publish to pub.dev
         run: |
-          echo "${{ secrets.PUB_CREDENTIALS }}" > ~/.pub-cache/credentials.json
+          echo "${{ secrets.PUB_CREDENTIALS }}" > ~/.config/dart/pub-credentials.json
           echo y | dart pub publish
