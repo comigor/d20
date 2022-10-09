@@ -32,11 +32,25 @@ jobs:
         run: dart pub get
       - name: Test
         if: always() && steps.install.outcome == 'success'
-        run: pub run test
+        run: dart test
+  analyze:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: dart-lang/setup-dart@v1.3
+        with:
+          sdk: stable
+      - id: install
+        name: Install dependencies
+        run: dart pub get
+      - name: Analyze
+        if: always() && steps.install.outcome == 'success'
+        run: dart analyze
   create-tag-and-release:
     needs:
       - lint
       - test
+      - analyze
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/beta'
     steps:
