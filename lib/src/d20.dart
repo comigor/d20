@@ -5,11 +5,12 @@
 /// ```
 /// import 'package:d20/d20.dart';
 /// ```
-
 import 'dart:math';
+
+import 'package:collection/collection.dart';
 import 'package:math_expressions/math_expressions.dart';
-import 'roll_result.dart';
-import 'roll_statistics.dart';
+
+import '../d20.dart';
 
 final RegExp _singleDiceRegExp = RegExp(r'(\d+)?d(\d+)(-[l|h])?');
 
@@ -45,12 +46,14 @@ class D20 {
         .toList();
     final lowestHighest = match[3];
 
-    var sum = results.fold(0, (int sum, int roll) => sum + roll);
+    int finalResult;
 
     if (lowestHighest == '-l') {
-      sum -= results.fold<int>(faces, min);
+      finalResult = results.min;
     } else if (lowestHighest == '-h') {
-      sum -= results.fold<int>(0, max);
+      finalResult = results.max;
+    } else {
+      finalResult = results.fold(0, (int sum, int roll) => sum + roll);
     }
 
     return RollResult(
@@ -58,7 +61,7 @@ class D20 {
       faces: faces,
       numberOfRolls: numberOfRolls,
       results: results,
-      finalResult: sum,
+      finalResult: finalResult,
     );
   }
 
@@ -122,6 +125,6 @@ class D20 {
         // ignore: avoid_as
         .evaluate(EvaluationType.REAL, _context) as double;
 
-    return exactResult.round();
+    return exactResult.ceil();
   }
 }
