@@ -5,12 +5,12 @@
 /// ```
 /// import 'package:d20/d20.dart';
 /// ```
-
 import 'dart:math';
+
 import 'package:collection/collection.dart';
 import 'package:math_expressions/math_expressions.dart';
-import 'roll_result.dart';
-import 'roll_statistics.dart';
+
+import '../d20.dart';
 
 final RegExp _singleDiceRegExp = RegExp(r'(\d+)?d(\d+)(-[l|h])?');
 
@@ -125,6 +125,6 @@ class D20 {
         // ignore: avoid_as
         .evaluate(EvaluationType.REAL, _context) as double;
 
-    return exactResult.round();
+    return exactResult.ceil();
   }
 }
